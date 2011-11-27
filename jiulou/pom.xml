@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>org.jiulou</groupId>
+  <artifactId>jiulou</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  
+  <name>Jiulou Java Web Model</name>
+  <url>http://www.jiulou.org</url>
+  
+  <description>
+        A demo project for java web app,more faster,easy,expand.
+  </description>
+  <inceptionYear>2011</inceptionYear>
+  
+    <modules>
+   	<module>jiulou-web</module>
+    <module>jiulou-gen</module>
+    </modules>
+	
+  <properties>
+        <spring.version>3.0.6.RELEASE</spring.version>
+        <mybatis.version>3.0.6</mybatis.version>
+        <mybatis.spring.version>1.0.2</mybatis.spring.version>
+        <shiro.version>1.1.0</shiro.version>
+        <mysql.connector.version>5.1.18</mysql.connector.version>
+    </properties>
+      <developers>
+        <developer>
+            <id>aditzel</id>
+            <name>Allan Ditzel</name>
+            <email>aditzel@apache.org</email>
+            <url>http://www.allanditzel.com</url>
+            <organization>Apache Software Foundation</organization>
+            <timezone>-5</timezone>
+        </developer>
+		</developers>
+  <repositories>
+	<repository>  
+      <snapshots>  
+        <enabled>false</enabled>  
+      </snapshots>  
+      <id>central</id>  
+      <name>Maven Repository Switchboard</name>  
+      <url>http://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>  
+        <releases>  
+            <enabled>true</enabled>  
+        </releases>  
+        <id>bonecp-repo</id>  
+        <name>BoneCP Repository</name>  
+        <url>http://jolbox.com/bonecp/downloads/maven</url>  
+    </repository>
+	</repositories>
+  <dependencies>
+  
+        <dependency>
+            <groupId>javax.servlet</groupId>  
+            <artifactId>jstl</artifactId>  
+            <version>1.2</version>
+            <scope>jar</scope>
+        </dependency>  
+        <dependency>  
+            <groupId>taglibs</groupId>  
+            <artifactId>standard</artifactId>  
+            <version>1.1.2</version>
+            <scope>provided</scope>
+        </dependency>  
+        <dependency>  
+            <groupId>javax.servlet</groupId>  
+            <artifactId>servlet-api</artifactId>  
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.0</version>
+      <scope>provided</scope>
+    </dependency>        
+        
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-core</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-web</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-orm</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-jdbc</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-context</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-aop</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-expression</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-test</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-tx</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-webmvc</artifactId>  
+            <version>${spring.version}</version>  
+        </dependency> 
+      <!-- shiro start -->  
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>  
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- shiro end -->  
+        
+        <!-- database start -->
+        <dependency>
+	        <groupId>mysql</groupId>
+	        <artifactId>mysql-connector-java</artifactId>
+	        <version>${mysql.connector.version}</version>
+        </dependency>
+        <!-- database end -->
+        
+        <dependency>  
+            <groupId>org.slf4j</groupId>  
+            <artifactId>slf4j-api</artifactId>  
+            <version>1.6.1</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.slf4j</groupId>  
+            <artifactId>slf4j-log4j12</artifactId>  
+            <version>1.6.1</version>  
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        <!-- logging end -->
+        <!-- database start		 -->
+	<dependency>
+		<groupId>com.jolbox</groupId>
+		<artifactId>bonecp</artifactId>
+		<version>0.7.1.RELEASE</version>
+	</dependency>
+
+	 <dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>${mybatis.version}</version>
+	  </dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis.spring.version}</version>
+		</dependency>
+		
+        <!-- Database End -->
+        
+        <dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+        <dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+        <dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.18</version>
+		</dependency>
+		
+		<!-- 3th party tool start -->
+<dependency>
+   <groupId>org.codehaus.jackson</groupId>
+   <artifactId>jackson-mapper-asl</artifactId>
+   <version>1.9.2</version>
+</dependency>
+
+     <dependency>
+        <groupId>org.owasp.esapi</groupId>
+        <artifactId>esapi</artifactId>
+        <version>2.0GA</version>
+     </dependency>
+
+   
+        <!-- test start -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+	    <groupId>org.unitils</groupId>
+	    <artifactId>unitils-spring</artifactId>
+	    <version>3.2</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.unitils</groupId>
+	    <artifactId>unitils-dbunit</artifactId>
+	    <version>3.2</version>
+	    <scope>test</scope>
+	</dependency>	
+  </dependencies>
+  
+    <build>	
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>  
+				<artifactId>maven-compiler-plugin</artifactId> 	
+				<configuration>
+				<source>1.6</source>  
+				<target>1.6</target>  
+				<encoding>UTF-8</encoding>  
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+    <scm>
+    	<url>http://jiulou.googlecode.com/svn/trunk/</url>
+    	<connection>scm:svn:http://jiulou.googlecode.com/svn/trunk/</connection>
+    	<developerConnection>scm:svn:https://jiulou.googlecode.com/svn/trunk/</developerConnection>
+    	<tag>HEAD</tag>
+    </scm>
+    <issueManagement>
+    	<url>http://code.google.com/p/jiulou/issues/list</url>
+    </issueManagement>
+</project>

@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>jiulou</artifactId>
+    <groupId>org.jiulou</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>jiulou-gen</artifactId>
+  <packaging>war</packaging>
+ <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>  
+				<artifactId>maven-compiler-plugin</artifactId> 	
+				<configuration>
+			  	<directory>web/WEB-INF</directory>
+			  	<outputDirectory>web/WEB-INF/classes</outputDirectory>
+			  	<sourceDirectory>src/main/java</sourceDirectory>
+			  	<testSourceDirectory>src/test/java</testSourceDirectory>
+			  	<testOutputDirectory>web/WEB-INF/classes</testOutputDirectory>				
+				<source>1.6</source>  
+				<target>1.6</target>  
+				<encoding>UTF-8</encoding>  
+				</configuration>
+			</plugin>		
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webappDirectory>${basedir}/web</webappDirectory>
+					<warSourceDirectory>${basedir}/web</warSourceDirectory>
+				</configuration>
+			</plugin>
+			</plugins>
+	</build>  
+</project>

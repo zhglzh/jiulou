@@ -1,0 +1,8 @@
+/*  Main Stylesheet */
+@import url(reset.css) screen;
+@import url(style.css) screen;
+/* Invalid Stylesheet. This makes stuff look pretty. 
+	Remove it if you want the CSS completely valid */
+@import url(invalid.css) screen;
+
+@import url(../../../resource/css/widget.css) screen;

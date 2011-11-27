@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>contact</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+jQuery(document).ready(function(){
+	$('#contactform').submit(function(){				  
+		var action = $(this).attr('action');
+		$.post(action, { 
+			name: $('#name').val(),
+			email: $('#email').val(),
+			company: $('#company').val(),
+			subject: $('#subject').val(),
+			message: $('#message').val()
+		},
+			function(data){
+				$('#contactform #submit').attr('disabled','');
+				$('.response').remove();
+				$('#contactform').before('<p class="response">'+data+'</p>');
+				$('.response').slideDown();
+				if(data=='Message sent!') $('#contactform').slideUp();
+			}
+		); 
+		return false;
+	});
+});
+// ]]>
+</script>
+</head>
+<body>
+<div class="main">
+  <div class="header">
+    <div class="block_header">
+      <div class="logo"><a href="index.html"><img src="images/logo.gif" width="277" height="143" border="0" alt="logo" /></a></div>
+      <div class="search">
+        <form id="form1" name="form1" method="post" action="">
+          <label><span>
+            <input name="q" type="text" class="keywords" id="textfield" maxlength="50" value="Search..." />
+            </span>
+            <input name="b" type="image" src="images/search.gif" class="button" />
+          </label>
+        </form>
+      </div>
+      <div class="menu">
+        <ul>
+          <li><a href="index.html"><span>Home</span></a></li>
+          <li><a href="about.html"><span> About Us</span></a></li>
+          <li><a href="services.html"><span>Services</span></a></li>
+          <li><a href="services.html"><span>Portfolio</span></a></li>
+          <li><a href="contact.html" class="active"><span>Contact Us</span></a></li>
+        </ul>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="slider_top">
+    <div class="header_text2">
+      <a href="#"><img src="images/Sing_up.gif" alt="picture" border="0" /></a>
+      <h2>Contact us </h2>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="top_bg2">
+   <div class="clr"></div>
+  </div>
+  <div class="clr"></div>
+   <div class="body">
+    <div class="body_resize">
+      <div class="left">
+        <h2>Contact to company<br />
+        <span>Lorem Ipsum as their default model text...</span></h2>
+        <p>Phasellus iaculis varius est at laoreet. Praesent laoreet ornare odio id porta. Aenean quis leo justo, sit amet varius purus. Ras vitae enim nulla. Aenean tristique eros in mauris porta id suscipit libero scelerisque.</p>
+<form action="contact.php" method="post" id="contactform">
+          <ol>
+            <li>
+              <label for="name">First Name * </label>
+              <input id="name" name="name" class="text" />
+            </li>
+            <li>
+              <label for="email">Your email * </label>
+              <input id="email" name="email" class="text" />
+            </li>
+            <li>
+              <label for="company">Company</label>
+              <input id="company" name="company" class="text" />
+            </li>
+            <li>
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" class="text" />
+            </li>
+            <li>
+              <label for="message">Message * </label>
+              <textarea id="message" name="message" rows="6" cols="50"></textarea>
+            </li>
+            <li class="buttons">
+              <input type="image" name="imageField" id="imageField" src="images/send.gif" />
+            </li>
+          </ol>
+        </form>
+      </div>
+      <div class="right">
+        <h2>Get in touch<br />
+       <span> live from our blog page</span></h2>
+        <p><strong>Lorem Ipsum as their default model text...</strong><br />
+        There are many variations of passages of Lorem Ipsum available, but the majority have suffered.</p>
+        <p><strong>Address</strong>:          1458 Sample Road, Greenvalley, 12<br />
+          <strong>Telephone</strong>:      +123-1234-5678<br />
+          <strong>FAX</strong>:                  +458-4578<br />
+          <strong>Others</strong>:            +301 - 0125 - 01258<br />
+          <strong>E-mail</strong>:              <strong>mail@yoursitename.com</strong></p>
+          <div class="bg"></div>
+<img src="images/cont_1.gif" alt="picture" class="floated" />
+<img src="images/cont_2.gif" alt="picture" class="floated" />
+<img src="images/cont_3.gif" alt="picture" class="floated" />
+<img src="images/cont_4.gif" alt="picture" class="floated" />
+<img src="images/cont_5.gif" alt="picture" class="floated" />
+<img src="images/cont_6.gif" alt="picture" class="floated" />
+      </div>
+      <div class="clr"></div>
+    </div>
+    <div class="clr"></div>
+  </div>
+  <div class="footer">
+  <div class="footer_resize">
+  <p class="leftt">© Copyright 2009. Your Site Name Dot Com. All Rights Reserved<br />
+    <a href="#">Home</a> | <a href="#">Contact</a> | <a href="#">RSS </a></p>
+    <p class="rightt"><a href="#"><strong>Design by DreamTemplate </strong></a></p>
+    <div class="clr"></div>
+  <div class="clr"></div>
+</div>
+</div>
+</div>
+
+
+</body>
+</html>

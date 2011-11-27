@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.jiulou</groupId>
+        <artifactId>jiulou</artifactId>
+		<version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>jiulou-web</artifactId>
+    <name>Jiulou :: Web</name>
+    <packaging>war</packaging>
+	
+  <build>	
+    <finalName>jiulou</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>  
+				<artifactId>maven-compiler-plugin</artifactId> 	
+				<configuration>
+			  	<directory>web/WEB-INF</directory>
+			  	<outputDirectory>web/WEB-INF/classes</outputDirectory>
+			  	<sourceDirectory>src/main/java</sourceDirectory>
+			  	<testSourceDirectory>src/test/java</testSourceDirectory>
+			  	<testOutputDirectory>target/test-classes</testOutputDirectory>				
+				<source>1.6</source>  
+				<target>1.6</target>  
+				<encoding>UTF-8</encoding>  
+				</configuration>
+			</plugin>
+			<plugin>  
+				<groupId>org.apache.maven.plugins</groupId>  
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>  
+				<encoding>UTF-8</encoding> 
+				<overwrite>true</overwrite>
+				<resources><resource>src/main/resources</resource></resources>
+				<testResources><testResource>src/test/resources</testResource></testResources>
+				<outputDirectory>web/WEB-INF/classes</outputDirectory>				
+				</configuration>
+			</plugin>			
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webappDirectory>${basedir}/web</webappDirectory>
+					<warSourceDirectory>${basedir}/web</warSourceDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>web/WEB-INF/classes</directory>
+							<includes>
+								<include>*.*</include>
+							</includes>
+						</fileset>
+						<fileset>
+							<directory>web/WEB-INF/lib</directory>
+							<includes>
+								<include>*.*</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+  </plugins>
+    
+  </build>
+  
+</project>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+     
+	<!-- Beans configuration -->
+	<bean id="daoPointcuts" class="com.beijing.aop.AdviceTest">
+		 
+	</bean>
+		
+	<!-- AOP configuration -->
+	<aop:config>
+	    <aop:pointcut id="p_insert"
+       		expression="execution(* com.hamkoo.sol.*.dao.internal.*Impl.insert*(..))" />
+		<aop:pointcut id="p_updateByKey"
+       		expression="execution(* com.hamkoo.sol.*.dao.internal.*Impl.updateByK*(..))" />
+       	<aop:pointcut id="p_updateByDynamic"
+       		expression="execution(* com.hamkoo.sol.*.dao.internal.*Impl.updateByD*(..))" />
+       	<aop:pointcut id="p_deleteByKey"
+       		expression="execution(* com.hamkoo.sol.*.dao.internal.*Impl.deleteByK*(..))" />
+       		
+		<aop:aspect id="beforeInsert" ref="daoPointcuts">
+			<aop:before method="logBeforeInsert" pointcut-ref="p_insert"/>
+		</aop:aspect>
+		<aop:aspect id="beforeUpdateByKey" ref="daoPointcuts">
+			<aop:before method="logBeforeUpdateByKey" pointcut-ref="p_updateByKey"/>
+		</aop:aspect>
+		<aop:aspect id="beforeUpdateByDynamic" ref="daoPointcuts">
+			<aop:before method="logBeforeUpdateByDynamic" pointcut-ref="p_updateByDynamic"/>
+		</aop:aspect>
+		<aop:aspect id="afterDeleteByKey" ref="daoPointcuts">
+			<aop:after-returning method="logAfterDeleteByKey" pointcut-ref="p_deleteByKey"/>
+		</aop:aspect>
+	</aop:config>
+</beans>

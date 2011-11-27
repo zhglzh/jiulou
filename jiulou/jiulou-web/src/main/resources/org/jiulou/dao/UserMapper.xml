@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- * 用户表：记录所有站内用户 * @author Gentool * @date 2011-11-12 17:20:50 -->
+
+<mapper namespace="org.jiulou.dao.user">
+
+	<sql id="whereByKeys">
+		id = #{id}
+	</sql>
+	<sql id="whereOthers">
+		<trim prefix="where" prefixOverrides="and">
+		
+		<if test="password != null">
+    		and password = #{password}
+  		</if>
+		<if test="email != null">
+    		and email = #{email}
+  		</if>
+
+		<if test="username != null">
+    		and username = #{username}
+  		</if>
+  		
+  		<!-- like 查询 -->
+		<if test="username_LK != null">
+    		AND username like (#{username_LK})
+  		</if>
+
+		<if test="status != null">
+    		AND status = #{status}
+  		</if>
+  		<!-- in 查询 -->
+		<if test="status_IN != null">
+    		AND status in (#{status_IN})
+  		</if>
+  		
+		<if test="registerDate != null">
+    		AND register_date = #{registerDate}
+  		</if>
+  		<!-- 比较 查询 -->
+		<if test="registerDate_FR != null">
+    		AND register_date &gt;= #{registerDate_FR}
+  		</if>
+		<if test="registerDate_TO != null">
+    		AND register_date &lt;= #{registerDate_TO}
+  		</if>
+  		
+		<if test="uuid != null">
+    		AND uuid = #{uuid}
+  		</if>
+		<if test="uuid_IN != null">
+    		AND uuid in (#{uuid_IN})
+  		</if>
+		<if test="id != null">
+    		AND id = #{id}
+  		</if>
+		<if test="id_IN != null">
+    		AND id in (#{id_IN})
+  		</if>
+		</trim>
+	</sql>
+	<sql id="selectColumns">
+		id as id
+		,password as password
+		,email as email
+		,username as username
+		,login_count as loginCount
+		,status as status
+		,register_date as registerDate
+		,trial_from as
+		trialFrom
+		,trial_to as trialTo
+		,purchase_date as purchaseDate
+		,valid_date_from as validDateFrom
+		,valid_date_to as validDateTo
+		,uuid
+		as uuid
+		,hash as hash
+		,locale as locale
+	</sql>
+
+	<insert id="add" parameterType="org.jiulou.vo.User">
+
+		insert into user (
+		password,
+		email,
+		username,
+		login_count,
+		status,
+		register_date,
+		trial_from,
+		trial_to,
+		purchase_date,
+		valid_date_from,
+		valid_date_to,
+		uuid,
+		hash,
+		locale
+		)
+		values (
+		#{password},
+		#{email},
+		#{username},
+		#{loginCount},
+		#{status},
+		#{registerDate},
+		#{trialFrom},
+		#{trialTo},
+		#{purchaseDate},
+		#{validDateFrom},
+		#{validDateTo},
+		#{uuid},
+		#{hash},
+		#{locale}
+		)
+ </insert>
+
+	<insert id="addBatch" parameterType="List">
+		insert into user (
+		password,
+		email,
+		username,
+		login_count,
+		status,
+		register_date,
+		trial_from,
+		trial_to,
+		purchase_date,
+		valid_date_from,
+		valid_date_to,
+		uuid,
+		hash,
+		locale
+		)values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.password},
+			#{item.email},
+			#{item.username},
+			#{item.loginCount},
+			#{item.status},
+			#{item.registerDate},
+			#{item.trialFrom},
+			#{item.trialTo},
+			#{item.purchaseDate},
+			#{item.validDateFrom},
+			#{item.validDateTo},
+			#{item.uuid},
+			#{item.hash},
+			#{item.locale})
+    </foreach>
+	</insert>
+
+	<select id="getKeyByUuid" parameterType="String" resultType="long">
+		select id from user where uuid=#{uuid}
+	</select>
+	
+	<select id="find" parameterType="HashMap" resultType="org.jiulou.vo.User">
+		SELECT
+		<include refid="selectColumns" />
+		FROM user
+		where
+		<include refid="whereOthers" />
+	</select>
+
+	<select id="findByKey" parameterType="HashMap" resultType="org.jiulou.vo.User">
+		SELECT
+		<include refid="selectColumns" />
+		FROM user
+		where
+		<include refid="whereByKeys" />
+	</select>
+	
+	<select id="findByUuid" parameterType="String" resultType="org.jiulou.vo.User">
+		SELECT
+		<include refid="selectColumns" />
+		FROM user where uuid=#{uuid}
+	</select>
+		
+	<select id="findByPage" parameterType="HashMap" resultType="org.jiulou.vo.User">
+		SELECT
+		<include refid="selectColumns" />
+		FROM user where
+		<include refid="whereOthers" />
+	</select>
+	
+	<select id="findCount" parameterType="HashMap" resultType="org.jiulou.vo.User">
+		SELECT count(1)
+		FROM user where
+		<include refid="whereOthers" />
+	</select>	
+
+	<update id="updateByKey" parameterType="HashMap">
+		update user
+		<set>
+			<if test="password != null">password=#{password},</if>
+			<if test="email != null">email=#{email},</if>
+			<if test="username != null">username=#{username},</if>
+
+			<if test="loginCount != null">login_count=#{loginCount},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="registerDate != null">register_date=#{registerDate},</if>
+			<if test="trialFrom != null">trial_from=#{trialFrom},</if>
+			<if test="trialTo != null">trial_to=#{trialTo},</if>
+			<if test="purchaseDate != null">purchase_date=#{purchaseDate},</if>
+
+			<if test="validDateFrom != null">valid_date_from=#{validDateFrom},</if>
+			<if test="validDateTo != null">valid_date_to=#{validDateTo},</if>
+			<if test="uuid != null">uuid=#{uuid},</if>
+			<if test="hash != null">hash=#{hash},</if>
+			<if test="locale != null">locale=#{locale},</if>
+		</set>
+		where <include refid="whereByKeys" />
+	</update>
+
+	<delete id="deleteByKey" parameterType="HashMap">
+		delete from user where <include refid="whereByKeys" />
+	</delete>
+	
+</mapper>

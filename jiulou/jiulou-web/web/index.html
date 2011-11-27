@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>九楼</title>
+</head>
+<body>
+<h1>1 目标</h1>
+搭建九楼的过程中，主要考虑的因素：安全、性能、简便。
+轻量级 (Lighter may faster).
+不要大黑盒NO B3（Big Black Box）.
+可定制
+	<h2>1.1 安全</h2>
+	<h2>1.2 性能</h2>
+	<h2>1.3 简便</h2>
+
+<h1>2 特性</h1>
+<h2>2.1 安全</h2>
+安全是九楼考虑的第一因素。
+<h3>2.1.1 URL资源</h3>
+使用shiro控制所有url资源。
+<h3>2.1.2 数据资源</h3>
+<h3>2.1.3 技术安全</h3>
+	<h4>2.1.3.1 SQL注入</h4>
+所有的sql语句应该“绝对”写到mybatis的mapper中，并尽可能使用默认的statementType。（Any one of STATEMENT, PREPARED or CALLABLE.  This causes MyBatis to use Statement, PreparedStatement or CallableStatement respectively.  Default: PREPARED.）
+如果有任何例外的情况，应该对特殊字符进行转义。参考：http://en.wikipedia.org/wiki/SQL_injection<br>
+九楼默认实现了防sql注入工具类，参考：https://www.owasp.org/index.php/ESAPI#tab=Java_EE
+	<h4>2.1.3.2 XSS</h4>
+参考http://josephoconnell.com/java/xss-html-filter/的实现。
+
+http://owasp-esapi-java.googlecode.com/svn/trunk_doc/1.4.4/site/dependencies.html
+<h2>2.2 性能</h2>
+<h3>2.2.1 缓存</h3>
+<h3>2.2.2 页面静态化</h3>
+<h3>2.2.3 搜索</h3>
+使用solr进行搜索，启动时自动建立索引；自动发现表中被更新的数据并增量式重建索引。
+
+<h2>2.3 简便</h2>
+	<h3>2.3.1 集群扩展</h3>
+	<h3>2.3.2 监控</h3>
+	<h3>2.3.3 开发者友好</h3>
+		<h4>2.3.3.1 编码辅助</h4>
+		<h4>2.3.3.2 工具类</h4>
+		<h4>2.3.3.3 单元测试</h4>
+
+<h1>3 实践</h1>
+	<h2>3.1 数据库和CRUD</h2>
+！以下列出的方法使用的sql均可以生成，但建议在生成的sql上进一步优化。<br>
+约束：<br>
+a. （每条）数据都有且仅有一个bigint类型主键（mysql bigint -- java Long）<br>
+b. （每条）数据都有个uuid char(36)，并建立唯一约束<br>
+c. 每条数据有且仅有一个last_modified(TIMESTAMP)字段<br>
+		
+		<h3>3.1.1 数据insert与唯一标识</h3>
+add
+返回行数
+addBatch
+返回行数
+addAndGetUuid
+返回uuid
+
+		<h3>3.1.2 搜索</h3>
+findByKey
+findByUuid
+
+find 操作支持分页：start行数，从1开始；limit 每次查询行数
+find
+字符类型：支持like、in
+日期、数值类型：支持>= <= in
+findByPage
+findCount
+
+其他查询：
+like 属性名_LK
+
+in 属性名_IN
+大于等于、小于等于 属性名_FR ，属性名_TO
+
+其他sql查询条件，均可以使用类似的方式实现
+NOT in 属性名_NIN
+
+NULL 属性名_NL
+NOT null 属性名_NNL
+
+		<h3>3.1.3 更新（update）</h3>
+updateByKey
+
+		<h3>3.1.4  删除（delete）</h3>
+deleteByKey
+
+	<h2>3.2 代码Review</h2>
+	<h2>3.3 工具与流程</h2>
+clean up and format
+<h1>4 未完成</h1>
+<h2>Hello World!</h2>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+                        
+    <debug/>
+    <http pattern="/**" security="none"/>
+    <http pattern="/js/**" security="none"/>
+    <http pattern="/resource/**" security="none"></http>
+    <http pattern="/login.jsp" security="none"/>
+    
+    <http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+        <logout/>
+        <!-- 实现免登陆验证 -->
+        <remember-me />
+        <session-management invalid-session-url="/timeout.jsp">
+            <concurrency-control max-sessions="10" error-if-maximum-exceeded="true" />
+        </session-management>
+        
+       	<custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER"  />
+		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+    </http>
+    
+    <!-- 登录验证器 -->
+    <beans:bean id="loginFilter"
+		class="com.huaxin.security.MyUsernamePasswordAuthenticationFilter">
+		<!-- 处理登录 -->
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check"></beans:property>
+		<beans:property name="authenticationSuccessHandler" ref="loginLogAuthenticationSuccessHandler"></beans:property>
+		<beans:property name="authenticationFailureHandler" ref="simpleUrlAuthenticationFailureHandler"></beans:property>
+		<beans:property name="authenticationManager" ref="myAuthenticationManager"></beans:property>
+		
+		<beans:property name="usersDao" ref="usersDao"></beans:property>
+	</beans:bean>
+	<beans:bean id="loginLogAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/index.jsp"></beans:property>
+	</beans:bean>
+	<beans:bean id="simpleUrlAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/login.jsp"></beans:property>
+	</beans:bean>
+	
+    <!-- 认证过滤器 -->
+    <beans:bean id="securityFilter" class="com.huaxin.security.MySecurityFilter">
+    	<!-- 用户拥有的权限 -->
+    	<beans:property name="authenticationManager" ref="myAuthenticationManager" />
+    	<!-- 用户是否拥有所请求资源的权限 -->
+    	<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+    	<!-- 资源与权限对应关系 -->
+    	<beans:property name="securityMetadataSource" ref="mySecurityMetadataSource" />
+    </beans:bean>
+    <!-- 实现了UserDetailsService的Bean -->
+    <authentication-manager alias="myAuthenticationManager">
+        <authentication-provider user-service-ref="myUserDetailServiceImpl" />
+    </authentication-manager>
+    
+    <beans:bean id="myAccessDecisionManager" class="com.huaxin.security.MyAccessDecisionManager"></beans:bean>
+	<beans:bean id="mySecurityMetadataSource" class="com.huaxin.security.MySecurityMetadataSource">
+		<beans:constructor-arg name="resourcesDao" ref="resourcesDao"></beans:constructor-arg>
+	</beans:bean>
+	<beans:bean id="myUserDetailServiceImpl" class="com.huaxin.security.MyUserDetailServiceImpl">
+		<beans:property name="usersDao" ref="usersDao"></beans:property>
+	</beans:bean>
+	
+	<!-- 未登录的切入点 -->
+	<beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/login.jsp"></beans:property>
+	</beans:bean>
+</beans:beans>
