@@ -120,7 +120,15 @@
          <url-pattern>/Admin</url-pattern> 
      </servlet-mapping>
      -->
-     
+    <!--spring 标签库
+  	<jsp-config>
+		 <taglib>
+		  <taglib-uri>http://www.springframework.org/tags</taglib-uri>
+		  <taglib-location>/WEB-INF/tlds/spring.tld</taglib-location>
+		 </taglib>
+ 	</jsp-config>
+ 	-->
+ 
  	<welcome-file-list>
  		<welcome-file>index.jsp</welcome-file>
  	</welcome-file-list>

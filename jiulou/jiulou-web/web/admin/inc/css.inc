@@ -1,0 +1,1 @@
+<link rel="stylesheet" href="<%=request.getContextPath()%>/admin/resources/css/admin.css" type="text/css" media="screen" />

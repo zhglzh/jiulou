@@ -21,8 +21,8 @@ $(document).ready(function(){
 					// 为当前单击的二级菜单的父菜单增加 current
 					$(this).parent().parent().parent().find("a.nav-top-item").addClass("current");
 					$(this).parent().parent().find("a.current").removeClass("current");
-					$(this).addClass("current");					
-					return false;
+					$(this).addClass("current");
+					//return false;
 				}
 		);		
 		

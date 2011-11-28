@@ -6,7 +6,14 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />  
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" > 
+	    <property name="interceptors">
+	        <list>
+	        	<!-- i18n -->
+	            <ref bean="localeChangeInterceptor"/>
+	        </list>
+    	</property>
+	</bean>
 	
 	<context:annotation-config />
 	<!-- 把标记了@Controller注解的类转换为bean -->     

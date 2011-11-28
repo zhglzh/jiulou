@@ -10,12 +10,13 @@ html {
 body {
                 font-family: Arial, Helvetica, sans-serif;
                 color: #555;
-                background: #f0f0f0 url('../images/bg-body.gif') top left repeat-y;
+                
                 font-size: 12px;
                 }
 
 #body-wrapper {
-                background: url('../images/bg-radial-gradient.gif') fixed 230px top no-repeat;
+               background: #f0f0f0 url('../images/bg-body.gif') top left repeat-y;
+               min-height:768px;
                 }                
 
 /********************************      Elements styling      ********************************/
