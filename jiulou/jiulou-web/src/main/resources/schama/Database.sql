@@ -133,15 +133,28 @@ comment '角色权限表';
 /** 
  * 企业表，企业用户 
  **/
-create table corporations (
+create table corporation (
 
-    /** 
-     * id
-     * code
-     * name
-     * desc
-     * userid foreign key to users
-
-     * 
-     */
-);
+	id bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `DEPT_CODE` varchar(50) DEFAULT NULL COMMENT '公司编码',
+  `DEPT_NAME` varchar(100) DEFAULT NULL COMMENT '公司名称',
+  `TOTAL_CODE` varchar(50) DEFAULT NULL COMMENT '全编码',
+  `URL` varchar(400) DEFAULT NULL COMMENT '企业定制页面',
+  `SALES` varchar(100) DEFAULT NULL COMMENT '所属销售，此企业归属是哪个销售谈的',
+  `TEL` varchar(50) DEFAULT NULL COMMENT '联系电话',
+  `REG_TIME` datetime DEFAULT NULL COMMENT '注册时间',
+  `INDUSTRY` varchar(50) DEFAULT NULL COMMENT '所属行业',
+  `IS_JOB_APP` varchar(2) DEFAULT NULL COMMENT '$RM_YES_NOT={\r\n            0=否,\r\n            1=是\r\n            }',
+  `REG_IP` varchar(200) DEFAULT NULL COMMENT '注册IP',
+  `STATUS` varchar(2) DEFAULT NULL COMMENT '状态',
+  `VALID_TIME` datetime DEFAULT NULL COMMENT '有效期',
+  `TOTAL_MSG_COUNT` int(11) DEFAULT NULL COMMENT '总短信数量',
+  `LEAVE_MSG_COUNT` int(11) DEFAULT NULL COMMENT '剩余短信数量',
+  `JOB_DELIVER_COUNT` int(11) DEFAULT NULL COMMENT '职位投递数量',
+  `RESUME_DEAL_DAYS` smallint(6) DEFAULT NULL COMMENT '简历自动处理天数',
+    uuid char(36) NOT NULL,
+    last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP  ON UPDATE CURRENT_TIMESTAMP,
+    constraint pk_id PRIMARY KEY (id),
+    constraint uq_uuid unique(uuid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1
+comment '用 企业表';

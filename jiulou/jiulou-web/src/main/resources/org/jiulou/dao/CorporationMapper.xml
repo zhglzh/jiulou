@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ * 用 企业表
+ * @author Gentool
+ * @date 2011-11-29 10:20:31
+-->
+<mapper namespace="org.jiulou.dao.corporation">
+
+	<sql id="whereKeys">
+		<trim prefix="where" prefixOverrides="and">
+				and id = #{id}
+		</trim>
+	</sql>
+	<sql id="whereOthers">
+		<trim prefix="where" prefixOverrides="and">
+				and DEPT_CODE = #{deptCode}
+				and DEPT_NAME = #{deptName}
+				and TOTAL_CODE = #{totalCode}
+				and URL = #{url}
+				and SALES = #{sales}
+				and TEL = #{tel}
+				and REG_TIME = #{regTime}
+				and INDUSTRY = #{industry}
+				and IS_JOB_APP = #{isJobApp}
+				and REG_IP = #{regIp}
+				and STATUS = #{status}
+				and VALID_TIME = #{validTime}
+				and TOTAL_MSG_COUNT = #{totalMsgCount}
+				and LEAVE_MSG_COUNT = #{leaveMsgCount}
+				and JOB_DELIVER_COUNT = #{jobDeliverCount}
+				and RESUME_DEAL_DAYS = #{resumeDealDays}
+				and uuid = #{uuid}
+		</trim>
+	</sql>
+	<sql id="selectColumns">
+		<trim prefix="," prefixOverrides="">
+			,id as id
+			,DEPT_CODE as deptCode
+			,DEPT_NAME as deptName
+			,TOTAL_CODE as totalCode
+			,URL as url
+			,SALES as sales
+			,TEL as tel
+			,REG_TIME as regTime
+			,INDUSTRY as industry
+			,IS_JOB_APP as isJobApp
+			,REG_IP as regIp
+			,STATUS as status
+			,VALID_TIME as validTime
+			,TOTAL_MSG_COUNT as totalMsgCount
+			,LEAVE_MSG_COUNT as leaveMsgCount
+			,JOB_DELIVER_COUNT as jobDeliverCount
+			,RESUME_DEAL_DAYS as resumeDealDays
+			,uuid as uuid
+		</trim>
+	</sql>
+
+ <insert id="add" parameterType="org.jiulou.vo.Corporation">
+  	 insert into corporation (
+			DEPT_CODE,
+			DEPT_NAME,
+			TOTAL_CODE,
+			URL,
+			SALES,
+			TEL,
+			REG_TIME,
+			INDUSTRY,
+			IS_JOB_APP,
+			REG_IP,
+			STATUS,
+			VALID_TIME,
+			TOTAL_MSG_COUNT,
+			LEAVE_MSG_COUNT,
+			JOB_DELIVER_COUNT,
+			RESUME_DEAL_DAYS,
+			uuid
+  	 )
+  	 values (
+			#{deptCode},
+			#{deptName},
+			#{totalCode},
+			#{url},
+			#{sales},
+			#{tel},
+			#{regTime},
+			#{industry},
+			#{isJobApp},
+			#{regIp},
+			#{status},
+			#{validTime},
+			#{totalMsgCount},
+			#{leaveMsgCount},
+			#{jobDeliverCount},
+			#{resumeDealDays},
+			#{uuid}
+  	 )
+ </insert>
+ 
+<insert id="addAndGetKey" parameterType="org.jiulou.vo.Corporation">
+	<selectKey keyProperty="id" resultType="long" order="AFTER">
+	    select id from user where uuid=#{uuid}
+	</selectKey>
+  	 insert into corporation (
+			DEPT_CODE,
+			DEPT_NAME,
+			TOTAL_CODE,
+			URL,
+			SALES,
+			TEL,
+			REG_TIME,
+			INDUSTRY,
+			IS_JOB_APP,
+			REG_IP,
+			STATUS,
+			VALID_TIME,
+			TOTAL_MSG_COUNT,
+			LEAVE_MSG_COUNT,
+			JOB_DELIVER_COUNT,
+			RESUME_DEAL_DAYS,
+			uuid,
+  	 )
+  	 values (
+			#{deptCode},
+			#{deptName},
+			#{totalCode},
+			#{url},
+			#{sales},
+			#{tel},
+			#{regTime},
+			#{industry},
+			#{isJobApp},
+			#{regIp},
+			#{status},
+			#{validTime},
+			#{totalMsgCount},
+			#{leaveMsgCount},
+			#{jobDeliverCount},
+			#{resumeDealDays},
+			#{uuid},
+  	 )
+ </insert>
+ 
+ <insert id="addBatch" parameterType="List">
+  	 insert into corporation (
+			DEPT_CODE,
+			DEPT_NAME,
+			TOTAL_CODE,
+			URL,
+			SALES,
+			TEL,
+			REG_TIME,
+			INDUSTRY,
+			IS_JOB_APP,
+			REG_IP,
+			STATUS,
+			VALID_TIME,
+			TOTAL_MSG_COUNT,
+			LEAVE_MSG_COUNT,
+			JOB_DELIVER_COUNT,
+			RESUME_DEAL_DAYS,
+			uuid,
+  	 )values
+	<foreach collection = "list" item = "p" open = "(" close = ")" separator = "" >
+			#{p.deptCode},
+			#{p.deptName},
+			#{p.totalCode},
+			#{p.url},
+			#{p.sales},
+			#{p.tel},
+			#{p.regTime},
+			#{p.industry},
+			#{p.isJobApp},
+			#{p.regIp},
+			#{p.status},
+			#{p.validTime},
+			#{p.totalMsgCount},
+			#{p.leaveMsgCount},
+			#{p.jobDeliverCount},
+			#{p.resumeDealDays},
+			#{p.uuid},
+    </foreach >
+ </insert>
+ 
+	<select id="select" parameterType="HashMap" resultType="org.jiulou.vo.Corporation">
+	  SELECT
+			<include refid="selectColumns"/>
+	  FROM PERSON 
+	  	<include refid="whereOthers"/>
+		<include refid="whereKeys"/>
+	</select>
+	<select id="selectByKey" parameterType="HashMap" resultType="org.jiulou.vo.Corporation">
+	  SELECT
+			<include refid="selectColumns"/>
+	  FROM PERSON
+	  	<include refid="whereKeys"/>
+	</select>
+	<select id="selectByPage" parameterType="HashMap" resultType="org.jiulou.vo.Corporation">
+		SELECT
+			<include refid="selectColumns"/>
+	  FROM PERSON 
+	  	<include refid="whereOthers"/>
+		<include refid="whereKeys"/>
+	</select>
+
+	<update id="updateByKey" parameterType="HashMap">
+		update corporation
+		<set>
+				    <if test="deptCode != null">DEPT_CODE=#{deptCode},</if>
+				    <if test="deptName != null">DEPT_NAME=#{deptName},</if>
+				    <if test="totalCode != null">TOTAL_CODE=#{totalCode},</if>
+				    <if test="url != null">URL=#{url},</if>
+				    <if test="sales != null">SALES=#{sales},</if>
+				    <if test="tel != null">TEL=#{tel},</if>
+				    <if test="regTime != null">REG_TIME=#{regTime},</if>
+				    <if test="industry != null">INDUSTRY=#{industry},</if>
+				    <if test="isJobApp != null">IS_JOB_APP=#{isJobApp},</if>
+				    <if test="regIp != null">REG_IP=#{regIp},</if>
+				    <if test="status != null">STATUS=#{status},</if>
+				    <if test="validTime != null">VALID_TIME=#{validTime},</if>
+				    <if test="totalMsgCount != null">TOTAL_MSG_COUNT=#{totalMsgCount},</if>
+				    <if test="leaveMsgCount != null">LEAVE_MSG_COUNT=#{leaveMsgCount},</if>
+				    <if test="jobDeliverCount != null">JOB_DELIVER_COUNT=#{jobDeliverCount},</if>
+				    <if test="resumeDealDays != null">RESUME_DEAL_DAYS=#{resumeDealDays},</if>
+				    <if test="uuid != null">uuid=#{uuid},</if>
+		</set>
+		where
+		<include refid="whereKeys"/>
+	</update>
+	
+	<delete id="deleteByKey" parameterType="HashMap" flushCache="true" statementType="PREPARED" timeout="20000">
+	delete from corporation 
+	<include refid="whereKeys"/>
+	</delete>
+</mapper>

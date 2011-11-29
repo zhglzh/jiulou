@@ -236,6 +236,7 @@ public class TableMetadata {
 		if (-1 == i)
 			return null;
 		int j = s.lastIndexOf('\'');
+		if (j == -1) return "";
 		return s.substring(i + 9,j-1);
 	}
 

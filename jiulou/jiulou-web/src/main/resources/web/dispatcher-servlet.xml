@@ -17,7 +17,7 @@
 	
 	<context:annotation-config />
 	<!-- 把标记了@Controller注解的类转换为bean -->     
-    <context:component-scan base-package="com.xiamen.web" />
+    <context:component-scan base-package="org.jiulou.web" />
     
     <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
     <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"></bean>
@@ -31,7 +31,7 @@
                         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
                         <property name="viewClass"
                             value="org.springframework.web.servlet.view.JstlView" />
-                        <property name="prefix" value="/WEB-INF/pages/" />
+                        <property name="prefix" value="/" />
                         <property name="suffix" value=".jsp" />
                     </bean>
                 </entry>
