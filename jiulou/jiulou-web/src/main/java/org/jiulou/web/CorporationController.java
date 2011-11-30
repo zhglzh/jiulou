@@ -3,24 +3,28 @@ package org.jiulou.web;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jiulou.service.BaseService;
 import org.jiulou.util.DatetimeUtil;
+import org.jiulou.util.controller.ControllerUtil;
 import org.jiulou.vo.Corporation;
+import org.jiulou.vo.Pager;
 import org.jiulou.vo.Rtn;
 import org.jiulou.vo.User;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,26 +49,23 @@ public class CorporationController extends BaseController {
 		// 自定义日期格式
 		SimpleDateFormat dateFormat = new SimpleDateFormat(DatetimeUtil.DATE_PATTERN);
 		dateFormat.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
 	@RequestMapping(value = "/add.do")
-	public ModelAndView add(@ModelAttribute("vo") Corporation vo, BindingResult result,Model model) {
+	//@ResponseBody
+	public ModelAndView add(Corporation vo, BindingResult result,Model model,Locale locale) {
 
 		Rtn rtn = new Rtn();
 		rtn.setCode("0");
 		rtn.setMsg("sucess");
-
+		
 		this.validator.validate(vo, result);
 		if (result.hasErrors()) {
 			rtn.setCode("10");
-			// StringBuilder sb = new StringBuilder();
-			// for(ObjectError oe: result.getAllErrors()){
-			// String str = oe.getCode();
-			// }
 			rtn.setMsg("failed");
 			model.addAttribute("vo",vo);
-			model.addAttribute("validatorMsgs",result.getModel());
+			model.addAttribute("fieldErrors",ControllerUtil.translateValidatorMsgs(result, locale));
 		} else {
 			Integer count = 0;
 			try {
@@ -79,6 +80,18 @@ public class CorporationController extends BaseController {
 		model.addAttribute("rtn", rtn);
 
 		return new ModelAndView("/admin/corp/add.jsp", model.asMap());
+	}
+	
+	@RequestMapping(value = "/findByPage.json.do")
+	@ResponseBody
+	public Map<String,Object> findByPage(Pager page,Map map,Model model,ModelMap modelMap
+			,HttpServletRequest resuest,HttpSession session,Locale locale){
+		Map<String,Object> rstMap = new HashMap<String,Object>();
+		Rtn rtn = new Rtn();
+		rtn.setCode("0");
+		rtn.setMsg("sucess");
+		rstMap.put("rtn", rtn);
+		return rstMap;
 	}
 
 	@RequestMapping(value = "add.jn", method = RequestMethod.POST)

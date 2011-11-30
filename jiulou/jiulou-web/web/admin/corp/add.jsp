@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -11,25 +10,43 @@
 <title><spring:message code="admin.index.title"/></title>
 <%@ include file="../inc/css.inc" %>
 <%@ include file="../inc/js.inc" %>
+    <script type="text/javascript" src="jquery.form.js"></script>
+
+    <script type="text/javascript">
+        // wait for the DOM to be loaded
+        $(document).ready(function() {
+        	<c:if test="${rtn.code == '0' }">
+        		alert("插入成功");
+        		window.close();
+        	</c:if>
+            // bind 'myForm' and provide a simple callback function
+            $('#frmAdd__').ajaxForm({
+            	success: function() {
+                    $('#htmlExampleTarget').fadeIn('slow');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <br>
 <h3>添加新的公司</h3>
 
-<c:if test="${validatorMsgs != null }">
-<c:forEach items="${validatorMsgs}" var="error"> 
+<c:if test="${fieldErrors != null }">
+<c:forEach items="${fieldErrors}" var="error"> 
        <c:out value="${error.key}"></c:out>|<c:out value="${error.value}"></c:out><br>
 </c:forEach>
 </c:if>
 
-<form:form modelAttribute="vo" action="/corporations/add.do" method="post">
+<form id="frmAdd" name="frmAdd" action="/corporations/add.do" method="post">
+	
 	<fieldset>
 		<legend>公司信息</legend>
 		<!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
 		<p>
-			<label>公司名称</label>
-			<form:input path="deptName" class="text-input small-input" type="text"/>
-			<form:errors path="deptName" cssClass="input-notification error png_bg"></form:errors>
+			<label>公司名称</label> 
+			<input id="deptName" name="deptName" value="${vo.deptName}" class="text-input small-input" type="text" />
+				<span class="input-notification success png_bg">${fieldErrors.deptName}</span>
 			<!-- Classes for input-notification: success, error, information, attention -->
 			<br /> <small>A small description of the field</small>
 		</p>
@@ -39,9 +56,9 @@
 			<span class="input-notification error png_bg">Error message</span>
 		</p>
 		<p>
-		<label>有效期至</label> 
-		<input class="datepicker text-input small-input" type="text" id="validTime" name="validTime" onclick="WdatePicker()" />
-			<span class="input-notification error png_bg">${validTime}</span>
+		<label>有效期至</label>
+		<input  id="validTime" name="validTime" value="${vo.validTime}" type="text" class="datepicker text-input small-input"onclick="WdatePicker()" />
+			<span class="input-notification error png_bg">${fieldErrors.validTime}</span>
 		</p>
 		<p>
 			<label>Radio buttons</label> <input type="radio" name="radio1" />
@@ -68,7 +85,9 @@
 	</fieldset>
 	<div class="clear"></div>
 	<!-- End .clear -->
-</form:form>
-
+</form>
+<div id="htmlExampleTarget" style="display:none">
+成功
+</div>
 </body>
 </html>

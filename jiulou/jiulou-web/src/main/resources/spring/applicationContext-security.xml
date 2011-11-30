@@ -118,7 +118,7 @@
 				/**.gif = anon
 				/**.flv = anon
 				/**.html = anon
-				/**.jsp = accessLoggerFilter,anon
+				/**.jsp = accessLoggerFilter,authc
 				/s/index = authc
 				/s/shiro.jnlp = authc, user
 				/assets/** = anon

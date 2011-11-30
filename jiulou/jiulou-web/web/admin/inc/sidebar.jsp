@@ -30,7 +30,7 @@
 		<li>
 			<a href="#" class="nav-top-item">公司</a>
 			<ul>
-				<li><a href="#" title="开通、停止；管理公司的权限">公司管理</a></li>
+				<li><a id="corpsManage" href="<%=request.getContextPath()%>/admin/corp/" title="开通、停止；管理公司的权限">公司管理</a></li>
 				<li><a href="#">添加新的公司</a></li>
 				<li><a href="#" title="允许公司使用哪些功能？">公司权限管理</a></li>
 			</ul>

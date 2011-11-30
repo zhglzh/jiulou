@@ -18,5 +18,7 @@ public class CorporationValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "deptName"
 				,"corporation.field.deptName.required","公司名称必须输入");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "validTime"
+				,"corporation.field.deptName.required","必须输入有效期至");		
 	}
 }

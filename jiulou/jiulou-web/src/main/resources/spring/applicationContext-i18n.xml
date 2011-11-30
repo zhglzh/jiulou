@@ -6,7 +6,7 @@
      default-lazy-init="true">
      
 	 <bean id="messageSource"
-	  class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	  class="org.springframework.context.support.ResourceBundleMessageSource">
 	  <property name="basenames">
 	   <list>
 	    <value>classpath:i18n/admin/messages</value>
